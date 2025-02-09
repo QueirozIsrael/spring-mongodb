@@ -1,5 +1,6 @@
 package com.queirozisrael.springmongodb.resources;
 
+import com.queirozisrael.springmongodb.domain.Post;
 import com.queirozisrael.springmongodb.domain.User;
 import com.queirozisrael.springmongodb.dto.UserDTO;
 import com.queirozisrael.springmongodb.services.UserService;
@@ -44,6 +45,12 @@ public class UserResource {
     public ResponseEntity<Void> delete(@PathVariable String id) {
         service.delete(id);
         return ResponseEntity.noContent().build();
+    }
+
+    @GetMapping(value ="/{id}/posts")
+    public ResponseEntity<List<Post>> findPosts(@PathVariable String id) {
+        User obj = service.findById(id);
+        return ResponseEntity.ok().body(obj.getPosts());
     }
 
     @PutMapping(value ="/{id}")
